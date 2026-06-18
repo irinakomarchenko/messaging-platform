@@ -17,10 +17,6 @@ Each service is an independent Spring Boot application.
 
 ## Storage Strategy
 
-The first version uses H2 databases for stateful services.
-
-Later evolution:
-
 - PostgreSQL for users and metadata;
 - Redis for presence and connection mapping;
 - Kafka / NATS / RabbitMQ for asynchronous delivery;

@@ -1,2 +1,21 @@
 services:
-# Services will be added step by step.
+  user-postgres:
+    image: postgres:16-alpine
+    container_name: messaging-user-postgres
+    environment:
+      POSTGRES_DB: user_service_db
+      POSTGRES_USER: user_service_user
+      POSTGRES_PASSWORD: user_service_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_postgres_data:/var/lib/postgresql/data
+    networks:
+      - messaging-platform-network
+
+volumes:
+  user_postgres_data:
+
+networks:
+  messaging-platform-network:
+    driver: bridge
