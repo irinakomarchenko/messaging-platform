@@ -3,10 +3,14 @@ package com.irinakomarchenko.messagingplatform.user.exception;
 public class UserNotFoundException extends RuntimeException {
 
     public UserNotFoundException(Long userId) {
-        super("User with id " + userId + " was not found");
+        super("User not found with id: " + userId);
     }
 
-    public UserNotFoundException(String username) {
-        super("User with username '" + username + "' was not found");
+    public static UserNotFoundException byUsername(String username) {
+        return new UserNotFoundException("User not found with username: " + username);
+    }
+
+    private UserNotFoundException(String message) {
+        super(message);
     }
 }

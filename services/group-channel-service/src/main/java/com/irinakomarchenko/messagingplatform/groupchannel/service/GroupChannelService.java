@@ -1,13 +1,14 @@
 package com.irinakomarchenko.messagingplatform.groupchannel.service;
 
-import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.AddGroupMemberRequest;
-import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.CreateChannelRequest;
-import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.CreateGroupRequest;
-import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.SubscribeChannelRequest;
+
 import com.irinakomarchenko.messagingplatform.groupchannel.dto.response.ChannelResponse;
 import com.irinakomarchenko.messagingplatform.groupchannel.dto.response.ChannelSubscriberResponse;
 import com.irinakomarchenko.messagingplatform.groupchannel.dto.response.GroupMemberResponse;
 import com.irinakomarchenko.messagingplatform.groupchannel.dto.response.GroupResponse;
+import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.AddGroupMemberRequest;
+import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.CreateChannelRequest;
+import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.CreateGroupRequest;
+import com.irinakomarchenko.messagingplatform.groupchannel.dto.request.SubscribeChannelRequest;
 import com.irinakomarchenko.messagingplatform.groupchannel.entity.Channel;
 import com.irinakomarchenko.messagingplatform.groupchannel.entity.ChannelSubscriber;
 import com.irinakomarchenko.messagingplatform.groupchannel.entity.GroupChat;
@@ -174,15 +175,15 @@ public class GroupChannelService {
     public void unsubscribeFromChannel(Long channelId, Long userId) {
         Channel channel = findChannelById(channelId);
 
-        if (channel.getOwnerUserId().equals(userId)) {
-            throw new InvalidOperationException("Channel owner cannot unsubscribe from own channel");
-        }
-
         ChannelSubscriber subscriber = channelSubscriberRepository
                 .findByChannel_IdAndUserId(channelId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "User " + userId + " is not subscribed to channel " + channelId
                 ));
+
+        if (channel.getOwnerUserId().equals(userId)) {
+            throw new InvalidOperationException("Channel owner cannot unsubscribe from own channel");
+        }
 
         channelSubscriberRepository.delete(subscriber);
     }

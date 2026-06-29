@@ -37,7 +37,6 @@ Each service is a separate Spring Boot application with its own responsibility.
 - Java 21
 - Spring Boot 3.x
 - Maven
-- H2 for the first version
 - REST API
 - WebSocket
 - MapStruct

@@ -82,7 +82,7 @@ public class UserService {
         String normalizedUsername = normalizeUsername(username);
 
         User user = userRepository.findByUsername(normalizedUsername)
-                .orElseThrow(() -> new UserNotFoundException(normalizedUsername));
+                .orElseThrow(() -> UserNotFoundException.byUsername(normalizedUsername));
 
         return userMapper.toUserSearchResponse(user);
     }

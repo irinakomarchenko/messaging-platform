@@ -32,6 +32,7 @@
     <modules>
         <module>services/user-service</module>
         <module>services/group-channel-service</module>
+        <!-- <module>services/messaging-service</module> -->
     </modules>
 
     <dependencyManagement>
