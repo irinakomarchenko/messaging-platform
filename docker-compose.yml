@@ -10,11 +10,70 @@ services:
       - "5433:5432"
     volumes:
       - user_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user_service_user -d user_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - messaging-platform-network
+
+  group-channel-postgres:
+    image: postgres:16-alpine
+    container_name: messaging-group-channel-postgres
+    environment:
+      POSTGRES_DB: group_channel_service_db
+      POSTGRES_USER: group_channel_service_user
+      POSTGRES_PASSWORD: group_channel_service_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - group_channel_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U group_channel_service_user -d group_channel_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - messaging-platform-network
+
+  user-service:
+    build:
+      context: .
+      dockerfile: services/user-service/Dockerfile
+    container_name: messaging-user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-postgres:5432/user_service_db
+      SPRING_DATASOURCE_USERNAME: user_service_user
+      SPRING_DATASOURCE_PASSWORD: user_service_password
+    depends_on:
+      user-postgres:
+        condition: service_healthy
+    networks:
+      - messaging-platform-network
+
+  group-channel-service:
+    build:
+      context: .
+      dockerfile: services/group-channel-service/Dockerfile
+    container_name: messaging-group-channel-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://group-channel-postgres:5432/group_channel_service_db
+      SPRING_DATASOURCE_USERNAME: group_channel_service_user
+      SPRING_DATASOURCE_PASSWORD: group_channel_service_password
+    depends_on:
+      group-channel-postgres:
+        condition: service_healthy
     networks:
       - messaging-platform-network
 
 volumes:
   user_postgres_data:
+  group_channel_postgres_data:
 
 networks:
   messaging-platform-network:

@@ -1,12 +1,12 @@
-package com.irinakomarchenko.messagingplatform.user;
+package com.irinakomarchenko.messagingplatform.groupchannel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserServiceApplication {
+public class GroupChannelServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
+        SpringApplication.run(GroupChannelServiceApplication.class, args);
     }
 }

@@ -1,0 +1,27 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: group-channel-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/group_channel_service_db}
+    username: ${SPRING_DATASOURCE_USERNAME:group_channel_service_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:group_channel_service_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

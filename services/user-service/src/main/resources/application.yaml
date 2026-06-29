@@ -6,9 +6,9 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/user_service_db
-    username: user_service_user
-    password: user_service_password
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/user_service_db}
+    username: ${SPRING_DATASOURCE_USERNAME:user_service_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:user_service_password}
     driver-class-name: org.postgresql.Driver
 
   jpa:
