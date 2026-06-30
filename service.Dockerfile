@@ -10,11 +10,11 @@ COPY pom.xml .
 
 COPY services/user-service/pom.xml ./services/user-service/
 COPY services/group-channel-service/pom.xml ./services/group-channel-service/
+COPY services/messaging-service/pom.xml ./services/messaging-service/
+
 # COPY services/chat-history-service/pom.xml ./services/chat-history-service/
 # COPY services/connection-management-service/pom.xml ./services/connection-management-service/
-# COPY services/messaging-service/pom.xml ./services/messaging-service/
 # COPY services/api-gateway-service/pom.xml ./services/api-gateway-service/
-
 
 RUN --mount=type=cache,target=/root/.m2 \
     mvn -B -pl ${SERVICE_PATH} -am dependency:go-offline -DskipTests
